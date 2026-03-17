@@ -1,7 +1,11 @@
 <?php
 
-use App\Http\Controllers\ActivityController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ActivityController;
+
+Route::get('/test', function () {
+    return response()->json(['message' => 'API is working']);
+});
 
 Route::post('/activity', [ActivityController::class, 'store']);
 Route::get('/users/status', [ActivityController::class, 'allStatus']);
