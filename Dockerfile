@@ -15,12 +15,11 @@ RUN composer install --optimize-autoloader --no-dev --no-scripts --no-interactio
 
 RUN mkdir -p storage/framework/{sessions,views,cache,testing} \
     storage/logs bootstrap/cache && \
-    chmod -R 777 storage bootstrap/cache
+    chmod -R 777 storage bootstrap/cache && \
+    rm -f bootstrap/cache/*.php
 
-RUN rm -f bootstrap/cache/routes-v7.php \
-    bootstrap/cache/config.php \
-    bootstrap/cache/events.php
+RUN chmod +x start.sh
 
 EXPOSE 8080
 
-ENTRYPOINT ["/bin/sh", "-c", "php artisan route:clear && php artisan cache:clear && php artisan migrate --force && php -S 0.0.0.0:${PORT:-8080} -t public"]
+CMD ["/bin/sh", "start.sh"]
